@@ -1,12 +1,12 @@
 ﻿/*
 Programul afiseaza un patrat pe care il translateaza pe axa x la apasarea sagetilor stanga, dreapta
 */
+#include <iostream>
 #include "glos.h"
 #include "gl.h"
 #include "glu.h"
 #include "glaux.h"
 #include "glut.h"
-#define PI 3.1415;
 
 static GLfloat x = 0;
 static GLfloat y = 0;
@@ -50,10 +50,21 @@ void CALLBACK display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glBegin(GL_QUADS);
-    {
-        
 
+    static int points = 360;
+    static float pi = 3.1415;
+    static double interval = (2 * pi) / points;
+    static int radius = 50;
+
+    glBegin(GL_POLYGON);
+    {
+        for (int i = 0; i < points; i++) {
+            x = cos(i * interval) * radius;
+            y = sin(i * interval) * radius;
+            glVertex2d(x, y);
+            glColor3f(0.0f, 0.0f, 1.0f);
+            
+        }
     }
 
     glEnd();
@@ -74,10 +85,10 @@ void CALLBACK myReshape(GLsizei w, GLsizei h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     if (w <= h) {
-        glOrtho(0.0, 320.0, 320.0 * (GLfloat)h / (GLfloat)w,0.0 * (GLfloat)h / (GLfloat)w, -100.0, 100.0);
+        glOrtho(-160.0, 160.0, 160.0 * (GLfloat)h / (GLfloat)w, -160.0 * (GLfloat)h / (GLfloat)w, -10.0, 10.0);
     }
     else {
-        glOrtho(0.0 * (GLfloat)w / (GLfloat)h, 320.0 * (GLfloat)w / (GLfloat)h, 0, 320.0, -100.0, 100.0);
+        glOrtho(-160.0 * (GLfloat)w / (GLfloat)h, 160.0 * (GLfloat)w / (GLfloat)h, -160.0, 160.0, -10.0, 10.0);
     }
     glMatrixMode(GL_MODELVIEW);
 }
@@ -92,6 +103,7 @@ void CALLBACK myReshape(GLsizei w, GLsizei h)
     glMatrixMode(GL_MODELVIEW);
 }
 #endif
+
 
 int main(int argc, char** argv)
 {
