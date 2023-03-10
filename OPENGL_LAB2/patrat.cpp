@@ -6,6 +6,7 @@ Programul afiseaza un patrat pe care il translateaza pe axa x la apasarea sageti
 #include "glu.h"
 #include "glaux.h"
 #include "glut.h"
+#define PI 3.1415;
 
 static GLfloat x = 0;
 static GLfloat y = 0;
@@ -49,32 +50,14 @@ void CALLBACK display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glPushMatrix();
-    glTranslatef(x, y, z);
-    glRotatef(alpha, 0.0f, 0.0f,1.0f);
-
     glBegin(GL_QUADS);
     {
-        glColor3f(1.0, 0.0, 0.0);
-        glVertex2f(0, 0);
-        glColor3f(1.0, 1.0, 0.0);
-        glVertex2f(150.0, 100.0);
-        glColor3f(0.0, 0.0, 1.0);
-        glVertex2f(150.0, 150.0);
-        glColor3f(0.0, 1.0, 0.0);
-        glVertex2f(100.0, 150.0);
+        
 
     }
 
     glEnd();
-
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glOrtho(-1.0, 1.0, -1.0, 1.0, -10, 10);
-    glutWireSphere(100.0, 20, 20);
     
-    glPopMatrix();
-    
-
     glFlush();
 }
 
