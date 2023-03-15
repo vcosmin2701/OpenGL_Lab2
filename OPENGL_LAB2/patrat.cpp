@@ -56,18 +56,18 @@ void CALLBACK display()
     glRotatef(alpha, 1, 1, 1);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    glBegin(GL_QUAD_STRIP);
+    glBegin(GL_TRIANGLE_FAN);
     {
         glColor3f(1.0, 1.0, 1.0);
         for (int i = 0; i < points; i++) {
             x = cos(i * interval) * radius;
             z = sin(i * interval) * radius;
             y = 5;
-            glColor3f(0.0f, 0.0f, 1.0f);
+            glColor3f(2.0f, 0.0f, 1.0f);
             glVertex3d(x, y, z);
             y = 100;
-            glColor3f(0.0f, 0.0f, 1.0f);
-            glVertex3d(x, y, z);
+            glColor3f(0.5f, 0.0f, 1.0f);
+            glVertex2f(0,y);
             
         }
     }
@@ -113,7 +113,7 @@ int main(int argc, char** argv)
 {
     auxInitDisplayMode(AUX_SINGLE | AUX_RGB);
     auxInitPosition(0, 0, 800, 600);
-    auxInitWindow("Cylinder");
+    auxInitWindow("Cone");
     myInit();
     auxKeyFunc(AUX_LEFT, MoveLeft);
     auxKeyFunc(AUX_RIGHT, MoveRight);
