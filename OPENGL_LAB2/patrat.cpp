@@ -12,6 +12,10 @@ static GLfloat x = 0;
 static GLfloat y = 0;
 static GLfloat z = 10;
 static GLfloat alpha =0;
+static int points = 240;
+static float pi = 3.1415;
+static double interval = (2 * pi) / points;
+static int radius = 50;
 
 void myInit() {
     glClearColor(1.0, 1.0, 1.0, 1.0);
@@ -46,29 +50,29 @@ void CALLBACK rot_z_down(AUX_EVENTREC* event) {
 void CALLBACK display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-
-    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    glTranslatef(x, y, z);
+    glRotatef(alpha, 1, 1, 1);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    static int points = 360;
-    static float pi = 3.1415;
-    static double interval = (2 * pi) / points;
-    static int radius = 50;
-
-    glBegin(GL_POLYGON);
+    glBegin(GL_QUAD_STRIP);
     {
+        glColor3f(1.0, 1.0, 1.0);
         for (int i = 0; i < points; i++) {
             x = cos(i * interval) * radius;
-            y = sin(i * interval) * radius;
-            glVertex2d(x, y);
+            z = sin(i * interval) * radius;
+            y = 5;
             glColor3f(0.0f, 0.0f, 1.0f);
+            glVertex3d(x, y, z);
+            y = 100;
+            glColor3f(0.0f, 0.0f, 1.0f);
+            glVertex3d(x, y, z);
             
         }
     }
-
     glEnd();
-    
+
     glFlush();
 }
 
@@ -85,10 +89,10 @@ void CALLBACK myReshape(GLsizei w, GLsizei h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     if (w <= h) {
-        glOrtho(-160.0, 160.0, 160.0 * (GLfloat)h / (GLfloat)w, -160.0 * (GLfloat)h / (GLfloat)w, -10.0, 10.0);
+        glOrtho(-160.0, 160.0, 160.0 * (GLfloat)h / (GLfloat)w, -160.0 * (GLfloat)h / (GLfloat)w, -100.0, 100.0);
     }
     else {
-        glOrtho(-160.0 * (GLfloat)w / (GLfloat)h, 160.0 * (GLfloat)w / (GLfloat)h, -160.0, 160.0, -10.0, 10.0);
+        glOrtho(-160.0 * (GLfloat)w / (GLfloat)h, 160.0 * (GLfloat)w / (GLfloat)h, -160.0, 160.0, -100.0, 100.0);
     }
     glMatrixMode(GL_MODELVIEW);
 }
@@ -109,7 +113,7 @@ int main(int argc, char** argv)
 {
     auxInitDisplayMode(AUX_SINGLE | AUX_RGB);
     auxInitPosition(0, 0, 800, 600);
-    auxInitWindow("Square");
+    auxInitWindow("Cylinder");
     myInit();
     auxKeyFunc(AUX_LEFT, MoveLeft);
     auxKeyFunc(AUX_RIGHT, MoveRight);
