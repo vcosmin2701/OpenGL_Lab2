@@ -12,7 +12,7 @@ static GLfloat x = 0;
 static GLfloat y = 0;
 static GLfloat z = 10;
 static GLfloat alpha =0;
-static int points = 240;
+static int points = 4;
 static float pi = 3.1415;
 static double interval = (2 * pi) / points;
 static int radius = 50;
@@ -56,18 +56,18 @@ void CALLBACK display()
     glRotatef(alpha, 1, 1, 1);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    glBegin(GL_TRIANGLE_FAN);
+    glBegin(GL_QUAD_STRIP);
     {
         glColor3f(1.0, 1.0, 1.0);
-        for (int i = 0; i < points; i++) {
+        for (int i = 0; i <= points; i++) {
             x = cos(i * interval) * radius;
             z = sin(i * interval) * radius;
-            y = 5;
-            glColor3f(2.0f, 0.0f, 1.0f);
+            y = 4;
+            glColor3f(1.5f, 0.5f, 1.0f);
             glVertex3d(x, y, z);
-            y = 100;
-            glColor3f(0.5f, 0.0f, 1.0f);
-            glVertex2f(0,y);
+            y = 50;
+            glColor3f(1.5f, 0.0f, 3.0f);
+            glVertex3d(x, y, z);
             
         }
     }
@@ -113,7 +113,7 @@ int main(int argc, char** argv)
 {
     auxInitDisplayMode(AUX_SINGLE | AUX_RGB);
     auxInitPosition(0, 0, 800, 600);
-    auxInitWindow("Cone");
+    auxInitWindow("Parallelepiped");
     myInit();
     auxKeyFunc(AUX_LEFT, MoveLeft);
     auxKeyFunc(AUX_RIGHT, MoveRight);
